@@ -3,12 +3,20 @@ import styles from './Egg.module.css';
 import gsap from 'gsap';
 export default function Hatch(props) {
   const hatchRef = useRef(null);
+  const crackRefR = useRef(null);
+  const crackRefL = useRef(null);
+  const crackRef = useRef(null);
+
+  const hideCrack = {
+    strokeDasharray: 1,
+    strokeDashoffset: 1,
+  };
 
   const rockEgg = {
     keyframes: {
       rotation: [10, -8, 6, -5, 3, -2, 1],
     },
-    duration: 1,
+    duration: 0.5,
     transformOrigin: '50% 100%',
   };
 
@@ -16,7 +24,22 @@ export default function Hatch(props) {
     const timeline = gsap.timeline({
       onComplete: () => console.log('done'),
     });
-    timeline.to(hatchRef.current, rockEgg);
+    timeline
+      .to(hatchRef.current, rockEgg)
+      .to(crackRefR.current, {
+        strokeDashoffset: 0,
+        duration: 0.5,
+      })
+      .to(hatchRef.current, rockEgg)
+      .to(crackRefL.current, {
+        strokeDashoffset: 2,
+        duration: 0.5,
+      })
+      .to(hatchRef.current, rockEgg)
+      .to(crackRef.current, {
+        strokeDashoffset: 0,
+        duration: 0.3,
+      });
   };
 
   return (
@@ -75,19 +98,28 @@ export default function Hatch(props) {
             fill="#FFFFFF"
           />
           <path
+            style={hideCrack}
             id="crack"
+            ref={crackRef}
             d="M124 331.5L165.5 356L183 331.5L200.5 352.5L240 313L279.5 352.5L309.5 313L357.5 352.5L387.5 323"
             stroke="black"
+            pathLength="1"
           />
           <path
+            style={hideCrack}
             id="crack-l-r"
+            ref={crackRefL}
             d="M165.5 356L183 331.5L200.5 352.5L240 313"
             stroke="black"
+            pathLength="1"
           />
           <path
+            style={hideCrack}
             id="crack-r-l"
+            ref={crackRefR}
             d="M240 313L279.5 352.5L309.5 313L357.5 352.5"
             stroke="black"
+            pathLength="1"
           />
         </g>
       </svg>
