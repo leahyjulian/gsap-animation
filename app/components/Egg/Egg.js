@@ -8,8 +8,10 @@ export default function Egg(props) {
     hatched.play();
   };
   return (
-    <div className={styles.class}>
-      <button onClick={animate}>Hatch</button>
+    <div className={styles.eggBox}>
+      <button className={styles.btn} onClick={animate}>
+        Hatch Dinosaur
+      </button>
       <Hatch setHatched={setHatched} />
     </div>
   );
