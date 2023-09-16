@@ -1991,10 +1991,10 @@ typed-array-length@^1.0.4:
     for-each "^0.3.3"
     is-typed-array "^1.1.9"
 
-typescript@@>=4.2.0:
-  version "5.3.0-dev.20230915"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.0-dev.20230915.tgz#8f9f92dd1e361a9628c29fe72b3b09bbc2b04911"
-  integrity sha512-GQr8dkpN44ywddczAzV80zSPckUfqUbxmCi2SXJ0SvOMOk7TXMUrcptoHQm7HqFggTUS41AUEr+a8RmyPApw4Q==
+typescript@>=4.2.0:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
+  integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
