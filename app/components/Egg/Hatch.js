@@ -1,7 +1,7 @@
-import { useRef } from 'react';
-import styles from './Egg.module.css';
 import gsap, { Power1 } from 'gsap';
-export default function Hatch(props) {
+import { useEffect, useRef } from 'react';
+import styles from './Egg.module.css';
+export default function Hatch({ setHatched }) {
   const hatchRef = useRef(null);
   const crackRefR = useRef(null);
   const crackRefL = useRef(null);
@@ -13,16 +13,18 @@ export default function Hatch(props) {
     strokeDashoffset: 1,
   };
 
-  const rockEgg = {
-    keyframes: {
-      rotation: [9, -8, 6, -5, 3, -2, 0],
-    },
-    duration: 0.5,
-    transformOrigin: '50% 100%',
-  };
+  useEffect(() => {
+    const rockEgg = {
+      keyframes: {
+        rotation: [9, -8, 6, -5, 3, -2, 0],
+      },
+      duration: 0.5,
+      transformOrigin: '50% 100%',
+    };
 
-  const animation = () => {
-    const timeline = gsap.timeline();
+    const timeline = gsap.timeline({
+      paused: true,
+    });
     timeline
       .to(hatchRef.current, rockEgg)
       .to(
@@ -59,10 +61,12 @@ export default function Hatch(props) {
       .to(topEggRef.current, { y: -30, duration: 0.7, ease: Power1.easeIn })
       .to(topEggRef.current, { y: -15, duration: 0.3, ease: Power1.easeOut })
       .to(topEggRef.current, { y: -80, duration: 0.7, ease: Power1.easeOut });
-  };
+
+    setHatched(timeline);
+  }, [setHatched]);
 
   return (
-    <div className={styles.class} onClick={animation}>
+    <div className={styles.class}>
       <svg
         width="500"
         height="599"
