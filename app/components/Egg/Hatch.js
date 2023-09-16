@@ -1,11 +1,12 @@
 import { useRef } from 'react';
 import styles from './Egg.module.css';
-import gsap from 'gsap';
+import gsap, { Power1 } from 'gsap';
 export default function Hatch(props) {
   const hatchRef = useRef(null);
   const crackRefR = useRef(null);
   const crackRefL = useRef(null);
   const crackRef = useRef(null);
+  const topEggRef = useRef(null);
 
   const hideCrack = {
     strokeDasharray: 1,
@@ -14,32 +15,50 @@ export default function Hatch(props) {
 
   const rockEgg = {
     keyframes: {
-      rotation: [10, -8, 6, -5, 3, -2, 1],
+      rotation: [9, -8, 6, -5, 3, -2, 0],
     },
     duration: 0.5,
     transformOrigin: '50% 100%',
   };
 
   const animation = () => {
-    const timeline = gsap.timeline({
-      onComplete: () => console.log('done'),
-    });
+    const timeline = gsap.timeline();
     timeline
       .to(hatchRef.current, rockEgg)
-      .to(crackRefR.current, {
-        strokeDashoffset: 0,
-        duration: 0.5,
-      })
+      .to(
+        crackRefR.current,
+        {
+          strokeDashoffset: 0,
+          duration: 0.5,
+        },
+        '<+=0.2'
+      )
       .to(hatchRef.current, rockEgg)
-      .to(crackRefL.current, {
-        strokeDashoffset: 2,
-        duration: 0.5,
-      })
+      .to(
+        crackRefL.current,
+        {
+          strokeDashoffset: 2,
+          duration: 0.5,
+        },
+        '<+=0.2'
+      )
       .to(hatchRef.current, rockEgg)
-      .to(crackRef.current, {
-        strokeDashoffset: 0,
-        duration: 0.3,
-      });
+      .to(
+        crackRef.current,
+        {
+          strokeDashoffset: 0,
+          duration: 0.3,
+          onComplete: () => {
+            crackRefL.current.style.strokeDashoffset = 1;
+            crackRefR.current.style.strokeDashoffset = 1;
+            crackRef.current.style.strokeDashoffset = 1;
+          },
+        },
+        '<+=0.2'
+      )
+      .to(topEggRef.current, { y: -30, duration: 0.7, ease: Power1.easeIn })
+      .to(topEggRef.current, { y: -15, duration: 0.3, ease: Power1.easeOut })
+      .to(topEggRef.current, { y: -80, duration: 0.7, ease: Power1.easeOut });
   };
 
   return (
@@ -51,7 +70,7 @@ export default function Hatch(props) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg">
         <g id="hatch" ref={hatchRef}>
-          <g id="egg-dino">
+          <g id="egg-dino" ref={topEggRef}>
             <path
               id="dino"
               d="M305 319L311.5 370V391.5L315 435.5L319.5 457.5L286 468H250.5V419V370C247.333 373.5 238.6 380.2 229 379C219.4 377.8 205.333 354.167 199.5 342.5C198.167 338.167 196.3 327.4 199.5 319C202.7 310.6 222.5 295.5 232 289L286 293.5L305 319Z"
